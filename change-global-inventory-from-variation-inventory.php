@@ -1,4 +1,5 @@
 <?php
+/* Making the global quantity in stock of the product equal to zero when the number of variations in its inventory reaches zero in Woocommerce */
 // Hide "Out of stock" variable product archive pages
 function wc_get_variable_product_stock_quantity( $output = 'raw', $product_id = 0 ){
     if ( is_woocommerce() ) {
