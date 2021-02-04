@@ -30,6 +30,21 @@ function wc_get_variable_product_stock_quantity( $output = 'raw', $product_id = 
                 $product->set_stock_quantity(0);
                 $product->set_stock_status( 'outofstock' );
                 $product->save();
+
+                $out_of_stock_status = 'outofstock';
+                update_post_meta($product_id, '_stock', 0);
+                update_post_meta( $product_id, '_stock_status', wc_clean( $out_of_stock_status ) );
+                wp_set_post_terms( $product_id, 'outofstock', 'product_visibility', true );
+            } else {
+                $html = '<p class="stock in-stock">'. sprintf( __("%s in stock", "woocommerce"), $stock_quantity ).'</p>';
+                $product->set_stock_quantity($stock_quantity);
+                $product->set_stock_status( 'instock' );
+                $product->save();
+
+                $in_stock_status = 'instock';
+                update_post_meta($product_id, '_stock', $stock_quantity);
+                update_post_meta( $product_id, '_stock_status', wc_clean( $in_stock_status ) );
+                wp_set_post_terms( $product_id, 'instock', 'product_visibility', true );
             }
         }
     }
